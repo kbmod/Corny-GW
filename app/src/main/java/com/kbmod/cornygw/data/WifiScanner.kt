@@ -1,9 +1,12 @@
 package com.kbmod.cornygw.data
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.os.Build
@@ -86,8 +89,12 @@ class WifiScanner(context: Context) {
      * permission surfaces as an empty batch, which the permission gate in the
      * UI is already responsible for explaining.
      */
+    @SuppressLint("MissingPermission")
     fun readResults(isFresh: Boolean): ScanBatch {
         val now = System.currentTimeMillis()
+        if (!hasScanPermissions()) {
+            return ScanBatch(emptyList(), isFresh = isFresh, atMs = now)
+        }
         val results = runCatching { wifiManager.scanResults }.getOrDefault(emptyList())
         val sightings = results.mapNotNull { result ->
             val bssid = result.BSSID ?: return@mapNotNull null
@@ -101,6 +108,19 @@ class WifiScanner(context: Context) {
             )
         }
         return ScanBatch(sightings = sightings, isFresh = isFresh, atMs = now)
+    }
+
+    private fun hasScanPermissions(): Boolean {
+        val locationGranted = ContextCompat.checkSelfPermission(
+            appContext,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+        ) == PackageManager.PERMISSION_GRANTED
+        val nearbyWifiGranted = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+            ContextCompat.checkSelfPermission(
+                appContext,
+                Manifest.permission.NEARBY_WIFI_DEVICES,
+            ) == PackageManager.PERMISSION_GRANTED
+        return locationGranted && nearbyWifiGranted
     }
 
     private fun ScanResult.ssidCompat(): String {

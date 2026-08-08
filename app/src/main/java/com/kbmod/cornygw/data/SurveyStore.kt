@@ -164,7 +164,7 @@ class SurveyStore(context: Context) {
             "timestamp_ms,timestamp_iso,ssid,bssid,rssi_dbm,latitude,longitude,gps_accuracy_m"
         const val COLUMN_COUNT = 8
         const val MAX_PREVIEW_ROWS = 1
-        val FILE_STAMP = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
+        val FILE_STAMP = SimpleDateFormat("yyyyMMdd_HHmmss_SSS", Locale.US)
         val ISO_STAMP = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
     }
 }

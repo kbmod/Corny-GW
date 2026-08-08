@@ -308,8 +308,9 @@ class HunterViewModel(application: Application) : AndroidViewModel(application) 
         val sighting = batch.sightings.firstOrNull { it.bssid == bssid } ?: return
         val fix = state.location ?: return
 
-        // A fix older than the scan describes a place we may have already left.
-        if (batch.atMs - fix.time > MAX_FIX_AGE_MS) return
+        // A fix too far from the scan describes a place we may not have been at
+        // when the reading was taken.
+        if (kotlin.math.abs(batch.atMs - fix.time) > MAX_FIX_AGE_MS) return
         if (fix.accuracy > MAX_FIX_ACCURACY_M) return
 
         val sample = SurveySample(
