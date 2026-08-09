@@ -18,9 +18,25 @@ responsible. This app narrows it down to a position on a map, with an honest err
   <a href="docs/screenshots/maps.png"><img src="docs/screenshots/maps.png" alt="The estimate opened as a pin in Google Maps" width="180"></a>
 </p>
 
-<p align="center">
-  <em>Networks · Hunt · Survey · the estimate in Maps. Click any shot for full size.</em>
-</p>
+<p align="center"><em>Click any shot for full size.</em></p>
+
+**Networks** — tap a row to make it the target; everything else in the app follows that
+choice. Rows marked *2 radios* are one name broadcast by several access points, and expand
+so you can choose a single BSSID.
+
+**Hunt** — the big number is smoothed, with the raw reading under it, so the two disagreeing
+is normal. The trend card is the part to navigate by: it reports dB per reading and the best
+value seen, which tells you whether the last few steps helped.
+
+**Survey** — **Start survey** begins recording, and the app holds the screen on until you
+stop. The map is a plan view of *your walk* in meters, not a street map: dots are where you
+sampled, colored by signal, the marker with the tail is you, and the crosshair inside the
+dashed ring is the estimate with its uncertainty. Below it, an arrow pointing at the source
+from where you stand — and *angular coverage* and *uncertainty*, which are what say whether
+to believe any of it.
+
+**Maps** — hands the estimate to your maps app as a pin, to compare against real buildings.
+The uncertainty circle does not travel with it.
 
 ---
 
