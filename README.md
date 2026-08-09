@@ -5,7 +5,7 @@ nothing but the signal strength your phone already sees.
 
 You know the one. It has been sitting in your network list for months with a name that is
 just a bit too pleased with itself, and you have no idea which of your neighbors is
-responsible. This app narrows it down to a position on a map, with an honest error bar.
+responsible. This app narrows it down to a position on a map, with an honest error bar. k
 
 ---
 
