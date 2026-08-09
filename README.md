@@ -11,42 +11,32 @@ responsible. This app narrows it down to a position on a map, with an honest err
 
 ## Screenshots
 
-<img src="docs/screenshots/networks.png" alt="Networks tab: a list of nearby Wi-Fi networks with signal strength" width="280">
+<p align="center">
+  <a href="docs/screenshots/networks.png"><img src="docs/screenshots/networks.png" alt="Networks: nearby Wi-Fi networks with band, channel, security and signal" width="180"></a>
+  <a href="docs/screenshots/hunt.png"><img src="docs/screenshots/hunt.png" alt="Hunt: live signal gauge, warmer/colder trend and recent history" width="180"></a>
+  <a href="docs/screenshots/survey.png"><img src="docs/screenshots/survey.png" alt="Survey: the walk in plan view with the fitted source and its statistics" width="180"></a>
+  <a href="docs/screenshots/maps.png"><img src="docs/screenshots/maps.png" alt="The estimate opened as a pin in Google Maps" width="180"></a>
+</p>
 
-**Networks** — everything in range, grouped by name and sorted strongest first, with a filter
-box for name or BSSID. Each row carries the band, channel, security and signal in dBm,
-colored by quality. Names broadcast by more than one radio are marked *2 radios* and expand
-so you can pick a single BSSID rather than an average of the whole mesh kit. The selected
-target stays highlighted at the top; hidden networks appear as `(hidden network)` and are
-still perfectly locatable, since the beacon is what matters, not the name.
+<p align="center"><em>Click any shot for full size.</em></p>
 
-<img src="docs/screenshots/hunt.png" alt="Hunt tab: live signal gauge, trend and recent signal chart" width="280">
+**Networks** — tap a row to make it the target; everything else in the app follows that
+choice. Rows marked *2 radios* are one name broadcast by several access points, and expand
+so you can choose a single BSSID.
 
-**Hunt** — live signal for the chosen radio. The gauge shows the smoothed value with a
-quality word, and the raw reading underneath so you can see how much the smoothing is doing.
-The trend card turns the last several readings into warmer/colder guidance (*Getting closer,
-+1.1 dB per reading*) and remembers the best value seen, which is what you actually navigate
-by. Below that, a sparkline of recent history and a details panel: rough distance as a
-bracket rather than a number, band, channel, frequency, security, and the path loss
-parameters currently in use.
+**Hunt** — the big number is smoothed, with the raw reading under it, so the two disagreeing
+is normal. The trend card is the part to navigate by: it reports dB per reading and the best
+value seen, which tells you whether the last few steps helped.
 
-<img src="docs/screenshots/survey.png" alt="Survey tab: plan-view map of the walk and the estimated source with statistics" width="280">
+**Survey** — **Start survey** begins recording, and the app holds the screen on until you
+stop. The map is a plan view of *your walk* in meters, not a street map: dots are where you
+sampled, colored by signal, the marker with the tail is you, and the crosshair inside the
+dashed ring is the estimate with its uncertainty. Below it, an arrow pointing at the source
+from where you stand — and *angular coverage* and *uncertainty*, which are what say whether
+to believe any of it.
 
-**Survey** — record while you walk. Each fresh scan is paired with a GPS fix, and the map
-draws the track in a metric plan view: sample points colored by signal strength, the fitted
-source as a crosshair, and a scale bar. Underneath, the estimate itself — distance and
-bearing from where you are standing, an arrow that points at it, and the numbers that say
-whether to believe any of it: uncertainty, residual, variance explained, angular coverage,
-signal spread, sample count and fitted power at 1 m. The confidence label is derived from
-those, not from the residual alone. This walk closes a loop around the target, which is why
-it reads 8/8 sectors and high confidence.
-
-<img src="docs/screenshots/maps.png" alt="The estimated source opened as a pin in Google Maps" width="280">
-
-**Open in Maps** — the estimate handed to whatever maps app you have, labeled with the
-network name, so you can compare it against building outlines and rooftops. The uncertainty
-disc does not travel with the pin, so keep the figure from the Survey screen in mind: a
-confident fit is still a circle several meters wide, not a doorstep.
+**Maps** — hands the estimate to your maps app as a pin, to compare against real buildings.
+The uncertainty circle does not travel with it.
 
 ---
 
