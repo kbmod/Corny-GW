@@ -4,8 +4,49 @@ An Android app that works out **where a Wi-Fi network is physically coming from*
 nothing but the signal strength your phone already sees.
 
 You know the one. It has been sitting in your network list for months with a name that is
-just a bit too pleased with itself, and you have no idea which of your neighbours is
+just a bit too pleased with itself, and you have no idea which of your neighbors is
 responsible. This app narrows it down to a position on a map, with an honest error bar.
+
+---
+
+## Screenshots
+
+<img src="docs/screenshots/networks.png" alt="Networks tab: a list of nearby Wi-Fi networks with signal strength" width="280">
+
+**Networks** — everything in range, grouped by name and sorted strongest first, with a filter
+box for name or BSSID. Each row carries the band, channel, security and signal in dBm,
+colored by quality. Names broadcast by more than one radio are marked *2 radios* and expand
+so you can pick a single BSSID rather than an average of the whole mesh kit. The selected
+target stays highlighted at the top; hidden networks appear as `(hidden network)` and are
+still perfectly locatable, since the beacon is what matters, not the name.
+
+<img src="docs/screenshots/hunt.png" alt="Hunt tab: live signal gauge, trend and recent signal chart" width="280">
+
+**Hunt** — live signal for the chosen radio. The gauge shows the smoothed value with a
+quality word, and the raw reading underneath so you can see how much the smoothing is doing.
+The trend card turns the last several readings into warmer/colder guidance (*Getting closer,
++1.1 dB per reading*) and remembers the best value seen, which is what you actually navigate
+by. Below that, a sparkline of recent history and a details panel: rough distance as a
+bracket rather than a number, band, channel, frequency, security, and the path loss
+parameters currently in use.
+
+<img src="docs/screenshots/survey.png" alt="Survey tab: plan-view map of the walk and the estimated source with statistics" width="280">
+
+**Survey** — record while you walk. Each fresh scan is paired with a GPS fix, and the map
+draws the track in a metric plan view: sample points colored by signal strength, the fitted
+source as a crosshair, and a scale bar. Underneath, the estimate itself — distance and
+bearing from where you are standing, an arrow that points at it, and the numbers that say
+whether to believe any of it: uncertainty, residual, variance explained, angular coverage,
+signal spread, sample count and fitted power at 1 m. The confidence label is derived from
+those, not from the residual alone. This walk closes a loop around the target, which is why
+it reads 8/8 sectors and high confidence.
+
+<img src="docs/screenshots/maps.png" alt="The estimated source opened as a pin in Google Maps" width="280">
+
+**Open in Maps** — the estimate handed to whatever maps app you have, labeled with the
+network name, so you can compare it against building outlines and rooftops. The uncertainty
+disc does not travel with the pin, so keep the figure from the Survey screen in mind: a
+confident fit is still a circle several meters wide, not a doorstep.
 
 ---
 
@@ -25,12 +66,12 @@ The app models this with standard log-distance path loss:
 rssi(d) = ref − 10 · n · log₁₀(d)
 ```
 
-where `ref` is the transmitter's apparent power at one metre and `n` is the path loss
+where `ref` is the transmitter's apparent power at one meter and `n` is the path loss
 exponent (≈2 in open air, ≈3 on a typical street, 4+ through heavy construction).
 
 ### Solving without knowing the transmit power
 
-`ref` is unknown — you cannot walk up to a neighbour's router to calibrate it. But it enters
+`ref` is unknown — you cannot walk up to a neighbor's router to calibrate it. But it enters
 the equation linearly, so rearranging:
 
 ```
@@ -44,9 +85,9 @@ the third — no matrix algebra, and nothing to diverge.
 
 The search itself is a coarse grid sweep (4 m) followed by two refinements (1 m, then
 0.25 m). Gradient descent would be faster and worse: the cost surface is genuinely
-multi-modal when your walk is one-sided, and a local optimiser silently returns whichever
+multi-modal when your walk is one-sided, and a local optimizer silently returns whichever
 basin it started in. The sweep also yields the uncertainty region for free, since the
-neighbourhood has already been evaluated.
+neighborhood has already been evaluated.
 
 ---
 
@@ -96,7 +137,7 @@ without it.
 2. **Hunt** — live signal with a smoothed trace and a warmer/colder trend. Walk around and
    find roughly where it peaks.
 3. **Survey** — record while you walk. Each fresh scan is paired with a GPS fix. The map
-   shows your track coloured by signal, the estimated source, and its uncertainty disc.
+   shows your track colored by signal, the estimated source, and its uncertainty disc.
 4. Open the estimate in Maps, or export the raw CSV and do your own analysis.
 
 ### Getting a good result
@@ -126,7 +167,7 @@ interval in Settings. It makes an enormous difference to both screens.
 
 ### Calibrating the path loss exponent
 
-You cannot stand next to a neighbour's router, but you can stand next to your own. Run a
+You cannot stand next to a neighbor's router, but you can stand next to your own. Run a
 survey on your own access point and adjust the exponent until the estimate lands where the
 hardware actually is. Whatever value works for your walls will work for the street.
 
@@ -180,7 +221,7 @@ yourself.
 Locating a transmitter is an ordinary thing to want: it is how you track down interference,
 find your own misplaced hardware, or settle a nagging curiosity about a name in a list.
 Where it stops being fine is what you do with the answer. Take the uncertainty circle
-seriously — it is usually wider than a house, and confidently accusing the wrong neighbour
+seriously — it is usually wider than a house, and confidently accusing the wrong neighbor
 is the most likely outcome of ignoring it.
 
 ## Permissions
